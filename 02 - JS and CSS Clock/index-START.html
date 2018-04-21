@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>JS + CSS Clock</title>
+  <title>JS + oooo CSS Clock</title>
 </head>
 <body>
 
@@ -62,12 +62,24 @@
       background:black;
       position: absolute;
       top:50%;
+      transform: rotate(0deg);
+      transform-origin: 100%;
     }
 
   </style>
 
   <script>
 
+    const secondHand = document.querySelector('.second-hand');
+
+    function animateHands(ev) {
+      const now = new Date()
+      const sec = now.getSeconds();
+      const d = ((sec * 6) % 360) + 90;
+      console.log({ sec, d   });
+      secondHand.style.transform = `rotate(${d}deg)`;
+    }
+    window.setInterval(animateHands, 1000);
 
   </script>
 </body>
