@@ -9,56 +9,64 @@
 
 
   <div class="keys">
-    <div data-key="65" class="key">
-      <kbd>A</kbd>
+    <div data-key="a" class="key">
+      <kbd>a</kbd>
       <span class="sound">clap</span>
     </div>
-    <div data-key="83" class="key">
-      <kbd>S</kbd>
+    <div data-key="o" class="key">
+      <kbd>o</kbd>
       <span class="sound">hihat</span>
     </div>
-    <div data-key="68" class="key">
-      <kbd>D</kbd>
+    <div data-key="e" class="key">
+      <kbd>e</kbd>
       <span class="sound">kick</span>
     </div>
-    <div data-key="70" class="key">
-      <kbd>F</kbd>
+    <div data-key="u" class="key">
+      <kbd>u</kbd>
       <span class="sound">openhat</span>
     </div>
-    <div data-key="71" class="key">
-      <kbd>G</kbd>
+    <div data-key="h" class="key">
+      <kbd>h</kbd>
       <span class="sound">boom</span>
     </div>
-    <div data-key="72" class="key">
-      <kbd>H</kbd>
+    <div data-key="t" class="key">
+      <kbd>t</kbd>
       <span class="sound">ride</span>
     </div>
-    <div data-key="74" class="key">
-      <kbd>J</kbd>
+    <div data-key="n" class="key">
+      <kbd>n</kbd>
       <span class="sound">snare</span>
     </div>
-    <div data-key="75" class="key">
-      <kbd>K</kbd>
+    <div data-key="s" class="key">
+      <kbd>s</kbd>
       <span class="sound">tom</span>
     </div>
-    <div data-key="76" class="key">
-      <kbd>L</kbd>
+    <div data-key="d" class="key">
+      <kbd>d</kbd>
       <span class="sound">tink</span>
     </div>
   </div>
 
-  <audio data-key="65" src="sounds/clap.wav"></audio>
-  <audio data-key="83" src="sounds/hihat.wav"></audio>
-  <audio data-key="68" src="sounds/kick.wav"></audio>
-  <audio data-key="70" src="sounds/openhat.wav"></audio>
-  <audio data-key="71" src="sounds/boom.wav"></audio>
-  <audio data-key="72" src="sounds/ride.wav"></audio>
-  <audio data-key="74" src="sounds/snare.wav"></audio>
-  <audio data-key="75" src="sounds/tom.wav"></audio>
-  <audio data-key="76" src="sounds/tink.wav"></audio>
+  <audio data-key="a" src="sounds/clap.wav"></audio>
+  <audio data-key="o" src="sounds/hihat.wav"></audio>
+  <audio data-key="e" src="sounds/kick.wav"></audio>
+  <audio data-key="u" src="sounds/openhat.wav"></audio>
+  <audio data-key="n" src="sounds/boom.wav"></audio>
+  <audio data-key="t" src="sounds/ride.wav"></audio>
+  <audio data-key="h" src="sounds/snare.wav"></audio>
+  <audio data-key="s" src="sounds/tom.wav"></audio>
+  <audio data-key="d" src="sounds/tink.wav"></audio>
 
 <script>
-
+window.addEventListener('keydown', ev => {
+  // console.log({ key: ev.key  });
+  const aud = document.querySelector(`audio[data-key='${ev.key}`)
+  if (aud) {
+    // console.log({ aud  });
+    aud.currentTime = 0;
+    aud.play();
+  }
+})
 </script>
 
 
