@@ -15,7 +15,7 @@
     <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
 
     <label for="base">Base Color</label>
-    <input id="base" type="color" name="base" value="#ffc600">
+    <input id="base" type="color" name="base" value="rebeccapurple">
   </div>
 
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
@@ -57,6 +57,24 @@
   </style>
 
   <script>
+
+    function handleChange (ev) {
+      const target = ev.target;
+      if (!target) return;
+
+      const suffix = this.dataset.sizing || '';
+
+      // why is `this` the same as event target?
+      //      console.log( this, ev.target  );
+      const { id, value } = ev.target;
+
+      document.documentElement.style.setProperty(`--${id}`, `${value}${suffix}`)
+    }
+
+    document.querySelectorAll('.controls input').forEach(el => {
+      el.addEventListener('change', handleChange);
+      el.addEventListener('mousemove', handleChange);
+    });
   </script>
 
 </body>
