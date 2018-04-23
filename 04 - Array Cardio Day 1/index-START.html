@@ -73,8 +73,14 @@
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
-    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+    const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck', 'moped' ];
+    const counts = data.reduce( (acc, cur) =>
+      // clone the accumulator so we avoid mutating the value
+      Object.assign({}, acc, {
+        [cur]: acc[cur] ? acc[cur] + 1 : 1
+      }), {});
 
+    console.log( counts  );
 
   </script>
 </body>
