@@ -71,13 +71,31 @@
       font-family: 'Amatic SC', cursive;
       text-shadow:0 0 4px rgba(0, 0, 0, 0.72), 0 0 14px rgba(0, 0, 0, 0.45);
       font-size: 2em;
+      transition:transform 0.5s;
     }
+
+    .panel :first-child {
+      border: aliceblue;
+      transform: translateY(-50%);
+    }
+
+    .panel.open-active :first-child,
+    .panel.open-active :last-child {
+      transform: translateY(0%);
+    }
+
+    .panel :last-child {
+      border: 2px solid darkgreen ;
+      transform: translateY(50%);
+    }
+
     .panel p:nth-child(2) {
       font-size: 4em;
     }
 
     .panel.open {
       font-size:40px;
+      flex: 5;
     }
 
   </style>
@@ -112,6 +130,16 @@
   </div>
 
   <script>
+
+    function toggleOpen(el) {
+      console.log( {classlist: el.classList}  );
+      el.classList.toggle('open');
+    }
+
+    document.querySelectorAll('.panel').forEach(el =>
+      el.addEventListener('mousedown', () => toggleOpen(el))
+    );
+
 
   </script>
 
