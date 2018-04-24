@@ -63,7 +63,6 @@
       margin:0;
       width: 100%;
       transition:transform 0.5s;
-      border: 1px solid pink;
     }
 
     .panel p {
@@ -75,18 +74,16 @@
     }
 
     .panel :first-child {
-      border: aliceblue;
-      transform: translateY(-50%);
+      transform: translateY(-100%);
     }
 
-    .panel.open-active :first-child,
-    .panel.open-active :last-child {
+    .panel.open.active :first-child,
+    .panel.open.active :last-child {
       transform: translateY(0%);
     }
 
     .panel :last-child {
-      border: 2px solid darkgreen ;
-      transform: translateY(50%);
+      transform: translateY(100%);
     }
 
     .panel p:nth-child(2) {
@@ -131,14 +128,19 @@
 
   <script>
 
-    function toggleOpen(el) {
-      console.log( {classlist: el.classList}  );
-      el.classList.toggle('open');
+    function toggleClass (className, el, guard = () => true) {
+      return (e) => {
+        if (guard(e)) {
+          el.classList.toggle(className)
+        }
+      }
     }
 
-    document.querySelectorAll('.panel').forEach(el =>
-      el.addEventListener('mousedown', () => toggleOpen(el))
-    );
+    document.querySelectorAll('.panel').forEach(el => {
+      el.addEventListener('mousedown', toggleClass('open', el));
+      el.addEventListener('transitionend', toggleClass('active', el,
+        evt => evt.propertyName.includes('flex')));
+    });
 
 
   </script>
