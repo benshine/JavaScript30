@@ -7,6 +7,28 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+
+  const canvas = document.getElementById('draw');
+  const ctx = canvas.getContext('2d');
+
+  let isDrawing = false;
+  let penPos = [0,0];
+
+  const handleMouseDown = e => {
+    isDrawing = true;
+    penPos = [e.offsetX, e.offsetY];
+    ctx.fillText('d', ...penPos);
+
+  }
+
+  const stopDrawing = e => {
+    isDrawing = false;
+    penPos = [e.offsetX, e.offsetY];
+    ctx.fillText('u', ...penPos);
+
+  }
+  document.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mouseup', stopDrawing);
 </script>
 
 <style>
