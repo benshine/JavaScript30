@@ -13,21 +13,35 @@
 
   let isDrawing = false;
   let penPos = [0,0];
+  let prevPos = [0,0];
 
   const handleMouseDown = e => {
     isDrawing = true;
     penPos = [e.offsetX, e.offsetY];
+    prevPos = penPos;
+    ctx.moveTo(...penPos);
     ctx.fillText('d', ...penPos);
-
   }
 
+
+  const handleMouseMove = e => {
+    if (isDrawing) {
+      prevPos = penPos;
+      penPos = [e.offsetX, e.offsetY];
+      ctx.lineTo(...penPos);
+      ctx.stroke();
+    }
+
+  }
   const stopDrawing = e => {
     isDrawing = false;
+    prevPos = penPos;
     penPos = [e.offsetX, e.offsetY];
     ctx.fillText('u', ...penPos);
 
   }
   document.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mousemove', handleMouseMove);
   document.addEventListener('mouseup', stopDrawing);
 </script>
 
