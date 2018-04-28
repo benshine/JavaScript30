@@ -11,25 +11,36 @@
   const canvas = document.getElementById('draw');
   const ctx = canvas.getContext('2d');
 
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 20;
+  ctx.lineCap = 'round';
+
   let isDrawing = false;
   let penPos = [0,0];
   let prevPos = [0,0];
+  let hue = 0;
 
   const handleMouseDown = e => {
     isDrawing = true;
     penPos = [e.offsetX, e.offsetY];
     prevPos = penPos;
     ctx.moveTo(...penPos);
-    ctx.fillText('d', ...penPos);
+    ctx.beginPath()
   }
 
+  const updateHue = (origHue) => (origHue + 5) % 360;
 
   const handleMouseMove = e => {
     if (isDrawing) {
       prevPos = penPos;
+      ctx.beginPath();
+      ctx.moveTo(...prevPos);
       penPos = [e.offsetX, e.offsetY];
       ctx.lineTo(...penPos);
+      hue = updateHue(hue);
+      ctx.strokeStyle = `hsl(${hue}deg, 60%,50%)`;
       ctx.stroke();
+      ctx.closePath();
     }
 
   }
@@ -37,8 +48,6 @@
     isDrawing = false;
     prevPos = penPos;
     penPos = [e.offsetX, e.offsetY];
-    ctx.fillText('u', ...penPos);
-
   }
   document.addEventListener('mousedown', handleMouseDown);
   document.addEventListener('mousemove', handleMouseMove);
