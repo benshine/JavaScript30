@@ -99,6 +99,28 @@
   </div>
 
 <script>
+
+  const indexOfFirstCheckedItem = () => {
+    return Array.from( document.querySelectorAll('input')).findIndex((e) => {
+      return e.checked;
+    });
+  }
+
+  const handleClick = (e) => {
+    console.log( `got click`  )
+    console.dir( e  );
+    const nodeIndex = Array.from(e.target.parentNode.children).indexOf(e.target);
+    console.log( nodeIndex  );
+    const firstChecked = indexOfFirstCheckedItem();
+    if (firstChecked >= 0) {
+      console.log( {firstChecked}  );
+    }
+  };
+
+  document.querySelectorAll('.item').forEach((item) => {
+    item.addEventListener('click', handleClick);
+  });
+
 </script>
 </body>
 </html>
