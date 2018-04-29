@@ -106,18 +106,23 @@
   const getNextItem = item => item.nextElementSibling;
   const getPrevItem = item => item.previousElementSibling;
 
+  // Recursively extend selection
   function extendSelection(item, traversalFn ) {
     if (!item) {
+      // reached end of list so stop traversing
       return false;
     }
 
     const imp = item.children && item.children[0];
     if (imp && imp.checked) {
+      // The next item is checked, so we can
+      // stop traversing
       return true;
     }
 
-    const shouldExtend = extendSelection(traversalFn(item), traversalFn);
-    if (shouldExtend) {
+    // Ask the next sibling if the selection
+    // should be extended
+    if (extendSelection(traversalFn(item), traversalFn)) {
       if (imp) {
         imp.checked = true;
       }
@@ -128,12 +133,12 @@
   }
 
   const handleClick = (e) => {
-    const {target, shiftKey} = e;
+    const {target: {checked, parentElement}, shiftKey} = e;
 
-    if (target.checked && shiftKey) {
+    if (checked && shiftKey) {
       // if u click between two then i extend both up and down
-      extendSelection(getPrevItem(target.parentElement), getPrevItem);
-      extendSelection(getNextItem(target.parentElement), getNextItem);
+      extendSelection(getPrevItem(parentElement), getPrevItem);
+      extendSelection(getNextItem(parentElement), getNextItem);
     }
 
   }
