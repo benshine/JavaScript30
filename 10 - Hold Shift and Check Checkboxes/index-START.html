@@ -106,7 +106,12 @@
     });
   }
 
-  function extendSelectionDownwards (item) {
+
+  const getNextItem = (item) => {
+    return item.nextElementSibling;
+  }
+
+  function extendSelection(item, traversalFn ) {
     console.log( {item}  );
     if (!item) {
       return false;
@@ -117,7 +122,7 @@
       return true;
     }
 
-    const shouldExtend = extendSelectionDownwards(item.nextElementSibling);
+    const shouldExtend = extendSelection(traversalFn(item), traversalFn);
     if (shouldExtend) {
       console.log( `i should extend!`  );
       if (imp) {
@@ -135,7 +140,7 @@
     console.log({clickTargetChecked: target.checked, shiftKey});
 
     if (target.checked && shiftKey) {
-      extendSelectionDownwards(target.parentElement.nextElementSibling);
+      extendSelection(getNextItem(target.parentElement), getNextItem);
     }
 
   }
