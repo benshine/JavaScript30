@@ -106,18 +106,41 @@
     });
   }
 
-  const handleClick = (e) => {
-    console.log( `got click`  )
-    console.dir( e  );
-    const nodeIndex = Array.from(e.target.parentNode.children).indexOf(e.target);
-    console.log( nodeIndex  );
-    const firstChecked = indexOfFirstCheckedItem();
-    if (firstChecked >= 0) {
-      console.log( {firstChecked}  );
+  function extendSelectionDownwards (item) {
+    console.log( {item}  );
+    if (!item) {
+      return false;
     }
-  };
 
-  document.querySelectorAll('.item').forEach((item) => {
+    const imp = item.children && item.children[0];
+    if (imp && imp.checked) {
+      return true;
+    }
+
+    const shouldExtend = extendSelectionDownwards(item.nextElementSibling);
+    if (shouldExtend) {
+      console.log( `i should extend!`  );
+      if (imp) {
+        imp.checked = true;
+        console.log( 'yep'  );
+      }
+      return true;
+    }
+
+    return false;
+  }
+
+  const handleClick = (e) => {
+    const {target, shiftKey} = e;
+    console.log({clickTargetChecked: target.checked, shiftKey});
+
+    if (target.checked && shiftKey) {
+      extendSelectionDownwards(target.parentElement.nextElementSibling);
+    }
+
+  }
+
+  document.querySelectorAll('.item input').forEach((item) => {
     item.addEventListener('click', handleClick);
   });
 
