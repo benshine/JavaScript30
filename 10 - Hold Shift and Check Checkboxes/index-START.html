@@ -100,19 +100,13 @@
 
 <script>
 
-  const indexOfFirstCheckedItem = () => {
-    return Array.from( document.querySelectorAll('input')).findIndex((e) => {
-      return e.checked;
-    });
-  }
 
-
-  const getNextItem = (item) => {
-    return item.nextElementSibling;
-  }
+  // tree traversal fn so we can abstract traversal
+  // out of recursive selection-extension logicn
+  const getNextItem = item => item.nextElementSibling;
+  const getPrevItem = item => item.previousElementSibling;
 
   function extendSelection(item, traversalFn ) {
-    console.log( {item}  );
     if (!item) {
       return false;
     }
@@ -124,10 +118,8 @@
 
     const shouldExtend = extendSelection(traversalFn(item), traversalFn);
     if (shouldExtend) {
-      console.log( `i should extend!`  );
       if (imp) {
         imp.checked = true;
-        console.log( 'yep'  );
       }
       return true;
     }
@@ -137,9 +129,10 @@
 
   const handleClick = (e) => {
     const {target, shiftKey} = e;
-    console.log({clickTargetChecked: target.checked, shiftKey});
 
     if (target.checked && shiftKey) {
+      // if u click between two then i extend both up and down
+      extendSelection(getPrevItem(target.parentElement), getPrevItem);
       extendSelection(getNextItem(target.parentElement), getNextItem);
     }
 
@@ -152,3 +145,4 @@
 </script>
 </body>
 </html>
+
