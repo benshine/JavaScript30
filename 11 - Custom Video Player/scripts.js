@@ -5,15 +5,12 @@ function setup() {
   const volumeRange =  document.querySelector('.player__slider[name="volume"]');
   const rateRange =  document.querySelector('.player__slider[name="playbackRate"]');
   const skipButtons =  document.querySelectorAll('.player__button');
+  const progressBar =  document.querySelector('.progress__filled');
 
-  let isPlaying = false;
-  const togglePlay = (e) => {
-    isPlaying = !isPlaying;
-    if (isPlaying) {
-      video.play();
-    } else {
-      video.pause()
-    }
+  const togglePlay = () => {
+    const method = video.paused ? 'play' : 'pause';
+    video[method]();
+    playButton.textContent = video.paused ? '►' : '❚ ❚';
   };
 
   playButton.addEventListener('click', togglePlay);
@@ -21,6 +18,7 @@ function setup() {
     () => video.volume = volumeRange.value)
   rateRange.addEventListener('change',
     () => video.playbackRate = rateRange.value);
+
 }
 
 setup();
