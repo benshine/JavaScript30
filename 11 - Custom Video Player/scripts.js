@@ -14,8 +14,13 @@ function setup() {
     } else {
       video.pause()
     }
-  }
-    playButton.addEventListener('click', togglePlay);
+  };
+
+  playButton.addEventListener('click', togglePlay);
+  volumeRange.addEventListener('change',
+    () => video.volume = volumeRange.value)
+  rateRange.addEventListener('change',
+    () => video.playbackRate = rateRange.value);
 }
 
 setup();
